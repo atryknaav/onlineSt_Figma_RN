@@ -1,9 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, Dimensions, PixelRatio } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const ConfirmCodeButton = ({ name, textColor, backgroundColor, border }: { name: string; textColor: string; backgroundColor: string; border: boolean }) => {
     const navigation = useNavigation();
+    const codeSlice = useSelector((state: RootState) => state.codeSlice.code);
+    const receivedCodeSlice = useSelector((state: RootState) => state.receivedCodeSlice.code);
   return (
     <TouchableOpacity 
       style={[
@@ -14,7 +18,7 @@ const ConfirmCodeButton = ({ name, textColor, backgroundColor, border }: { name:
           borderColor: border ? '#9b9b9e' : 'transparent'
         }
       ]}
-      onPress={() => navigation.navigate('Success')}
+      onPress={() => {if(codeSlice === receivedCodeSlice)navigation.navigate('Success')}}
     >
       <Text style={[styles.text, { color: textColor }]}>{name}</Text>
     </TouchableOpacity>

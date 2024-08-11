@@ -8,21 +8,24 @@ import Login from './screens/Login';
 import Signup from './screens/SignUp';
 import Success from './screens/Success';
 import ConfirmCode from './screens/ConfirmCode';
+import StoreProvider from './redux/StoreProvider';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    <StoreProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Confirm" component={ConfirmCode} options={{ title: 'Confirm your phone number', headerShown: false}} />
         <Stack.Screen name="Home" component={Home} options={{ title: 'Home Screen',   headerShown: false}} />
+        <Stack.Screen name="Confirm" component={ConfirmCode} options={{ title: 'Confirm your phone number', headerShown: false}} />
         <Stack.Screen name="Signup" component={Signup} options={{ title: 'Sign up',  headerShown: false}} />
         <Stack.Screen name="Login" component={Login} options={{ title: 'Login', headerShown: false}} />
         <Stack.Screen name="Success" component={Success} options={{ title: 'Success!', headerShown: false}} />
       
       </Stack.Navigator>
     </NavigationContainer>
+    </StoreProvider>
   );
 }
 

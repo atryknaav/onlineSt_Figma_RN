@@ -1,66 +1,64 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { update } from '../../redux/codeSlice';
+import { RootState } from '../../redux/store';
 
-interface CodeInputProps {
-  onCodeComplete: (code: string) => void;
-}
+const CodeInput = () => {
+  const inputRefs = useRef<Array<TextInput | null>>(Array(7).fill(null));
+  const dispatch = useDispatch();
+  const codeSlice = useSelector((state: RootState) => state.codeSlice.code);
 
-const CodeInput: React.FC<CodeInputProps> = ({ onCodeComplete }) => {
-  const [values, setValues] = useState<string[]>(Array(6).fill(''));
-  const [focusedIndex, setFocusedIndex] = useState<number>(0);
-
-  const inputRefs = useRef<Array<TextInput | null>>(Array(6).fill(null));
-
-  const formatValue = (value: string, index: number): string => {
-    const parts = [...values];
-    parts[index] = value;
-    const joined = parts.join('');
-    return joined.slice(0, 3) + (joined.length > 3 ? '-' : '') + joined.slice(3);
-  };
+  const [code, setCode] = useState<string>('');
 
   const handleChange = (text: string, index: number) => {
-    const newValues = [...values];
-    newValues[index] = text.replace(/\D/, ''); 
-    setValues(newValues);
+    const updatedCode = code.split('');
+    updatedCode[index] = text;
+    const newCode = updatedCode.join('');
+    setCode(newCode);
 
-
-    const formattedValue = formatValue(newValues[index], index);
-
-   
-    if (text.length > 0 && index < 5) {
-      setFocusedIndex(index + 1);
-    }
-
-
-    if (newValues.join('').length === 6) {
-      onCodeComplete(newValues.join(''));
+    if (text) {
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1]?.focus();
+      }
+    } else {
+      if (index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
     }
   };
 
   useEffect(() => {
-    if (inputRefs.current[focusedIndex]) {
-      inputRefs.current[focusedIndex]?.focus();
-    }
-  }, [focusedIndex]);
+    dispatch(update(code));
+  }, [code, dispatch]);
 
   return (
     <View style={styles.container}>
-      {values.map((value, index) => (
-        <TextInput
-          key={index}
-          style={[
-            styles.input,
-            { borderColor: focusedIndex === index ? 'blue' : '#ccc' },
-          ]}
-          value={formatValue(value, index)}
-          keyboardType="number-pad"
-          maxLength={1}
-          onChangeText={(text) => handleChange(text, index)}
-          ref={(ref) => (inputRefs.current[index] = ref)}
-          onFocus={() => setFocusedIndex(index)}
-          onBlur={() => setFocusedIndex(-1)}
-          textAlign="center"
-        />
+      {Array.from({ length: 6 }).map((_, index) => (
+        index === 3 ? 
+          <View style={{display: 'flex', flexDirection: 'row'}} key={index}>
+            <Text style={styles.dash}>-</Text>
+            <TextInput
+              placeholder='0'
+              style={styles.input}
+              maxLength={1}
+              keyboardType="number-pad"
+              onChangeText={(text) => handleChange(text, index)}
+              ref={(ref) => (inputRefs.current[index] = ref)}
+              textAlign="center"
+            />
+          </View>
+          :
+          <TextInput
+          placeholder='0'
+            key={index}
+            style={styles.input}
+            maxLength={1}
+            keyboardType="number-pad"
+            onChangeText={(text) => handleChange(text, index)}
+            ref={(ref) => (inputRefs.current[index] = ref)}
+            textAlign="center"
+          />
       ))}
     </View>
   );
@@ -68,17 +66,27 @@ const CodeInput: React.FC<CodeInputProps> = ({ onCodeComplete }) => {
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+    gap: 6,
   },
   input: {
-    width: 40,
     height: 60,
+    width: 50,
     borderWidth: 1,
-    borderRadius: 5,
-    marginHorizontal: 2,
-    fontSize: 18,
-    padding: 0,
+    borderRadius: 8,
+    textAlign: 'center',
+    fontSize: 40,
+  },
+  dash: {
+    fontSize: 40,
+    marginRight: 6
+  },
+  codeDisplay: {
+    fontSize: 20,
+    marginTop: 20,
   },
 });
 
