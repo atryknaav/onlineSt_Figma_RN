@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, PixelRatio, Text, View, StyleSheet } from 'react-native';
 import Field from '../components/Field';
 import { useNavigation } from '@react-navigation/native';
+import RegButton from '../components/SIgnUp/RegButton';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -15,8 +16,9 @@ const Login = () => {
             Please enter your details.
         </Text>
         <Field name='phone' />
+        <RegButton textColor='white' backgroundColor='#3aa3dc' name='Continue' border = {false}/>
         <Text style={styles.signupPrompt}>
-          Don't have an account? 
+          Don't have an account?{` `}
           <Text 
             style={styles.signupLink} 
             onPress={() => navigation.navigate('Signup')}

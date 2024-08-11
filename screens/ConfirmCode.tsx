@@ -43,7 +43,7 @@ const ConfirmCode = () => {
             <Text style={styles.resendText} onPress={fetchCode}>
                 <Text style={styles.resendLink}>Resend the code</Text>
             </Text>
-            <ConfirmCodeButton textColor='white' backgroundColor='#3aa3dc' name='Continue' border={false} />
+            <ConfirmCodeButton name='Continue'  />
         </View>
     );
 }

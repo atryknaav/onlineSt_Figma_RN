@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import codeSliceReducer from './codeSlice';
 import receivedCodeSliceReducer from './receivedCodeSlice';
+import regReducer from './regSlice';
 
 export const store = configureStore({
-  reducer: {codeSlice: codeSliceReducer, receivedCodeSlice: receivedCodeSliceReducer},
+  reducer: {codeSlice: codeSliceReducer, receivedCodeSlice: receivedCodeSliceReducer, regSlice: regReducer},
           
 })
 

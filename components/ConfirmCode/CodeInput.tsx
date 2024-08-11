@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text, PixelRatio } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { update } from '../../redux/codeSlice';
 import { RootState } from '../../redux/store';
@@ -8,6 +8,7 @@ const CodeInput = () => {
   const inputRefs = useRef<Array<TextInput | null>>(Array(7).fill(null));
   const dispatch = useDispatch();
   const codeSlice = useSelector((state: RootState) => state.codeSlice.code);
+  const receivedCodeSlice = useSelector((state: RootState) => state.receivedCodeSlice.code);
 
   const [code, setCode] = useState<string>('');
 
@@ -40,7 +41,7 @@ const CodeInput = () => {
             <Text style={styles.dash}>-</Text>
             <TextInput
               placeholder='0'
-              style={styles.input}
+              style={codeSlice === receivedCodeSlice? styles.input : styles.inputInactive}
               maxLength={1}
               keyboardType="number-pad"
               onChangeText={(text) => handleChange(text, index)}
@@ -52,7 +53,7 @@ const CodeInput = () => {
           <TextInput
           placeholder='0'
             key={index}
-            style={styles.input}
+            style={codeSlice === receivedCodeSlice? styles.input : styles.inputInactive}
             maxLength={1}
             keyboardType="number-pad"
             onChangeText={(text) => handleChange(text, index)}
@@ -79,10 +80,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     textAlign: 'center',
     fontSize: 40,
+    color: '#3aa3dc',
+    borderColor: '#af97d4'
+  },
+  inputInactive: {
+    color: '#cccecd',
+    height: 60,
+    width: 50,
+    borderWidth: 1,
+    borderRadius: 8,
+    textAlign: 'center',
+    fontSize: 40,
+    fontWeight:600,
+    borderColor: '#cccecd'
   },
   dash: {
     fontSize: 40,
-    marginRight: 6
+    marginRight: 6,
+    color: '#cccecd'
   },
   codeDisplay: {
     fontSize: 20,

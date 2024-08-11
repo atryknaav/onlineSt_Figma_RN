@@ -4,23 +4,21 @@ import { TouchableOpacity, Text, StyleSheet, Dimensions, PixelRatio } from 'reac
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
-const ConfirmCodeButton = ({ name, textColor, backgroundColor, border }: { name: string; textColor: string; backgroundColor: string; border: boolean }) => {
+const ConfirmCodeButton = ({ name }: { name: string}) => {
     const navigation = useNavigation();
     const codeSlice = useSelector((state: RootState) => state.codeSlice.code);
     const receivedCodeSlice = useSelector((state: RootState) => state.receivedCodeSlice.code);
   return (
     <TouchableOpacity 
-      style={[
-        styles.button, 
-        { 
-          backgroundColor: backgroundColor, 
-          borderWidth: border ? 1 : 0, 
-          borderColor: border ? '#9b9b9e' : 'transparent'
-        }
-      ]}
+      style={ codeSlice === receivedCodeSlice?
+        styles.button
+        :
+        styles.buttonInactive 
+       
+      }
       onPress={() => {if(codeSlice === receivedCodeSlice)navigation.navigate('Success')}}
     >
-      <Text style={[styles.text, { color: textColor }]}>{name}</Text>
+      <Text style={[styles.text, { color: 'white' }]}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -31,7 +29,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: '#3aa3dc'
+  },
+  buttonInactive: {
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    backgroundColor: '#A8CDE2'
+
   },
   text: {
     fontSize: PixelRatio.getPixelSizeForLayoutSize(6),

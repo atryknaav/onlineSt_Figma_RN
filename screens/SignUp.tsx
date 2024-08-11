@@ -16,7 +16,7 @@ const Signup = () => {
         </Text>
         <SignUpForm />
         <Text style={styles.loginPrompt}>
-          Do you have an account? 
+          Do you have an account? {` `}
           <Text 
             style={styles.loginLink} 
             onPress={() => navigation.navigate('Login')}
