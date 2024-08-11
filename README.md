@@ -1,6 +1,6 @@
 # Application Overview
 
-This app is developed based on the design provided in [Figma](https://www.figma.com/design/b9Is7U4WRK0KpwoM3Bicpw/RN-Test-Task(08.08.2024)?node-id=0-1).
+This cross-platform app is developed based on the design provided in [Figma](https://www.figma.com/design/b9Is7U4WRK0KpwoM3Bicpw/RN-Test-Task(08.08.2024)?node-id=0-1).
 
 ## Application Logic
 
