@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions, PixelRatio, Text, View, StyleSheet } from 'react-native';
 import SignUpForm from '../components/SIgnUp/SignUpForm';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { updateLast, updateName, updatePhone } from '../redux/regSlice';
 
 const Signup = () => {
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //set every field to '' whenever the user opens the screen
+    dispatch(updateLast(''));
+    dispatch(updateName(''));
+    dispatch(updatePhone(''));
+  })
 
   return (
     <View style={styles.container}>

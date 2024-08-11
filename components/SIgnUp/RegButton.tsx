@@ -1,22 +1,22 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, Dimensions, PixelRatio } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
-const RegButton = ({ name, textColor, backgroundColor, border }: { name: string; textColor: string; backgroundColor: string; border: boolean }) => {
+const RegButton = ({ name }: { name: string }) => {
     const navigation = useNavigation();
+    const allowedButton = useSelector((state: RootState) => state.regSlice.allowed);
   return (
     <TouchableOpacity 
       style={[
-        styles.button, 
-        { 
-          backgroundColor: backgroundColor, 
-          borderWidth: border ? 1 : 0, 
-          borderColor: border ? '#9b9b9e' : 'transparent'
-        }
+        allowedButton? styles.button : styles.buttonInactive, 
+        
       ]}
-      onPress={() => navigation.navigate('Confirm')}
+      //if all fields are filled - move to phone conf. screen
+      onPress={() => {if(allowedButton)navigation.navigate('Confirm')}}
     >
-      <Text style={[styles.text, { color: textColor }]}>{name}</Text>
+      <Text style={[styles.text, { color: 'white' }]}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -27,7 +27,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 10,
+    backgroundColor: '#3aa3dc'
+  },
+  buttonInactive: {
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    backgroundColor: '#A8CDE2'
+
   },
   text: {
     fontSize: PixelRatio.getPixelSizeForLayoutSize(6),

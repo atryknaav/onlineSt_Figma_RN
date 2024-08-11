@@ -19,6 +19,7 @@ const CodeInput = () => {
     setCode(newCode);
 
     if (text) {
+      //shifting focus after filling/deleting a slot
       if (index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1]?.focus();
       }

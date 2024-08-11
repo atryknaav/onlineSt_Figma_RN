@@ -7,28 +7,29 @@ import { updateReceived } from '../redux/receivedCodeSlice';
 import { RootState } from '../redux/store';
 
 const ConfirmCode = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [mockedCode, setMockedCode] = useState<string | null>(null);
     const dispatch = useDispatch();
-    const receivedCode = useSelector((state: RootState) => state.receivedCodeSlice.code);
+
 
     useEffect(() => {
         fetchCode();
     }, []);
 
     const fetchCode = async () => {
-        setIsLoading(true);
+      
+        //get the server code
         try {
             const response = await fetch('https://66b7eea13ce57325ac762578.mockapi.io/get-code/send');
             const data = await response.json();
-            setMockedCode(data[0].code); 
+            
+            //THE CONFIRMATION CODE IS SET TO 222222 BY DEFAULT
+            
+            
+            //pop-up notification on phones
             Alert.alert('Code Received', `Your confirmation code is: ${data[0].code}`);
             dispatch(updateReceived(data[0].code))
         } catch (error) {
             Alert.alert('Error', 'Failed to receive the code');
-        } finally {
-            setIsLoading(false);
-        }
+        } 
     };
 
     return (

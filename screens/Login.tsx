@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions, PixelRatio, Text, View, StyleSheet } from 'react-native';
 import Field from '../components/Field';
 import { useNavigation } from '@react-navigation/native';
 import RegButton from '../components/SIgnUp/RegButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { updateLast, updateName, updatePhone } from '../redux/regSlice';
 
 const Login = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const regPhone = useSelector((state: RootState) => state.regSlice.phone);
+
+  //set 'name' and 'lastname' in redux to ' ' to achieve the 'allowed' state
+  useEffect(() => {
+    dispatch(updateLast(' '));
+    dispatch(updateName(' '));
+  })
 
   return (
     <View style={styles.container}>
@@ -15,8 +26,8 @@ const Login = () => {
         <Text style={styles.subtitle}>
             Please enter your details.
         </Text>
-        <Field name='phone' />
-        <RegButton textColor='white' backgroundColor='#3aa3dc' name='Continue' border = {false}/>
+        <Field name='phone' state={regPhone} setState={updatePhone}/>
+        <RegButton name='Continue'/>
         <Text style={styles.signupPrompt}>
           Don't have an account?{` `}
           <Text 
