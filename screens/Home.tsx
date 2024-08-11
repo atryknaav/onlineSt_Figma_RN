@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimensions, View, Text, PixelRatio } from 'react-native'
 import ShopImg from '../components/Home/ShopImg'
-import ActionButton from '../components/ActionButton'
+import ActionButton from '../components/Home/ActionButton'
 
 const Home = () => {
   return (
