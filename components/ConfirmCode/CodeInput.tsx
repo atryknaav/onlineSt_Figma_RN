@@ -48,6 +48,7 @@ const CodeInput = () => {
               onChangeText={(text) => handleChange(text, index)}
               ref={(ref) => (inputRefs.current[index] = ref)}
               textAlign="center"
+              placeholderTextColor={'#cccecd'}
             />
           </View>
           :
@@ -60,6 +61,7 @@ const CodeInput = () => {
             onChangeText={(text) => handleChange(text, index)}
             ref={(ref) => (inputRefs.current[index] = ref)}
             textAlign="center"
+            placeholderTextColor={'#cccecd'}
           />
       ))}
     </View>
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     borderColor: '#af97d4'
   },
   inputInactive: {
-    color: '#cccecd',
+    color: '#979898',
     height: 60,
     width: 50,
     borderWidth: 1,
